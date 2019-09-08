@@ -39,12 +39,28 @@ class BinaryTreeNode:
         if right_child:
             right_child.parent = self
 
-    def rotate_left_left(self):
-        if self.left and self.left.left:
+    def rotate_left(self):
+        if self.right:
+            old_child_left = self.right.left
+            self.right.parent = self.parent
+            self.right.set_left(self)
+            self.set_right(old_child_left)
+
+    def rotate_right(self):
+        if self.left:
             old_child_right = self.left.right
             self.left.parent = self.parent
             self.left.set_right(self)
             self.set_left(old_child_right)
+
+    def height(self, current_level=0):
+        height_left = current_level
+        height_right = current_level
+        if self.left:
+            height_left = self.left.height(current_level + 1)
+        if self.right:
+            height_right = self.right.height(current_level + 1)
+        return max(height_left, height_right)
 
 # for visual debugging purposes
 EMPTY_NODE = BinaryTreeNode("x")
@@ -57,10 +73,22 @@ class BalancedBST:
     def insert(self, value):
         self.root.insert(value)
 
+    # TODO implement this func
+    def remove(self, value):
+        pass
+
     # Util debugging method to fix root
     def update_root(self):
         while (self.root.parent):
             self.root = self.root.parent
+
+    def rotate_left(self):
+        self.root.rotate_left()
+        self.update_root()
+
+    def rotate_right(self):
+        self.root.rotate_right()
+        self.update_root()
 
     # Return True or False for if tree contains
     # TODO
@@ -70,7 +98,7 @@ class BalancedBST:
     # Returns number (heigh of tree)
     # TODO
     def height(self):
-        pass
+        return self.root.height() + 1
 
     # Prints a visual representation of tree
     def pretty_print(self):

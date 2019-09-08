@@ -1,4 +1,4 @@
-from balanced_bst import BalancedBST
+from balanced_bst import BalancedBST, BinaryTreeNode
 
 MARKER = "======================="
 
@@ -9,6 +9,9 @@ def test_can_init():
     assert search_tree
     assert search_tree.root
     assert search_tree.root.value == root_val
+    assert search_tree.height() == 1
+    assert search_tree.root.height() == 0
+
     search_tree.pretty_print()
 
 def test_insert_less():
@@ -23,6 +26,8 @@ def test_insert_less():
     assert search_tree.root.value == root_val
     assert search_tree.root.left
     assert search_tree.root.left.value == less_val
+    assert search_tree.height() == 2
+
     search_tree.pretty_print()
 
 def test_insert_more():
@@ -37,6 +42,8 @@ def test_insert_more():
     assert search_tree.root.value == root_val
     assert search_tree.root.right
     assert search_tree.root.right.value == more_val
+    assert search_tree.height() == 2
+
     search_tree.pretty_print()
 
 def test_insert_both():
@@ -44,8 +51,10 @@ def test_insert_both():
     less_val = 2
     more_val = 10
     search_tree = BalancedBST(root_val)
+
     search_tree.insert(less_val)
     search_tree.insert(more_val)
+
     assert search_tree
     assert search_tree.root
     assert search_tree.root.value == root_val
@@ -53,6 +62,8 @@ def test_insert_both():
     assert search_tree.root.left.value == less_val
     assert search_tree.root.right
     assert search_tree.root.right.value == more_val
+    assert search_tree.height() == 2
+
     search_tree.pretty_print()
 
 def test_many_insertions():
@@ -63,7 +74,28 @@ def test_many_insertions():
         search_tree.insert(val)
     search_tree.pretty_print()
 
-def test_manual_left_left_rotation():
+def test_manual_left_rotation():
+    search_tree = BalancedBST(1)
+
+    search_tree.insert(2)
+    search_tree.insert(3)
+
+    print()
+    print("Before Rotation:")
+    search_tree.pretty_print()
+    print()
+
+    search_tree.rotate_left()
+    search_tree.update_root()
+    print("After Rotation:")
+    search_tree.pretty_print()
+
+    assert search_tree.root.value == 2
+    assert search_tree.root.left.value == 1
+    assert search_tree.root.right.value == 3
+    assert search_tree.height() == 2
+
+def test_manual_right_rotation():
     search_tree = BalancedBST(3)
     search_tree.insert(2)
     search_tree.insert(1)
@@ -73,24 +105,27 @@ def test_manual_left_left_rotation():
     search_tree.pretty_print()
     print()
 
-    search_tree.root.rotate_left_left()
-    search_tree.update_root()
+    search_tree.rotate_right()
     print("After Rotation:")
     search_tree.pretty_print()
+
     assert search_tree.root.value == 2
     assert search_tree.root.left.value == 1
     assert search_tree.root.right.value == 3
+    assert search_tree.height() == 2
 
-tests_to_run = [test_can_init,
-                test_insert_less,
-                test_insert_more,
-                test_insert_both,
-                test_many_insertions,
-                test_manual_left_left_rotation]
+if __name__ == "__main__":
+    tests_to_run = [test_can_init,
+                    test_insert_less,
+                    test_insert_more,
+                    test_insert_both,
+                    test_many_insertions,
+                    test_manual_left_rotation,
+                    test_manual_right_rotation]
 
-for t in tests_to_run:
-    print(MARKER)
-    print("{}:".format(t.__name__))
-    t()
-    print(MARKER)
-    print()
+    for run_test in tests_to_run:
+        print(MARKER)
+        print("{}:".format(run_test.__name__))
+        run_test()
+        print(MARKER)
+        print()
