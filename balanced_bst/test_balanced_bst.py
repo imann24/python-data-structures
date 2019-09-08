@@ -5,6 +5,7 @@ MARKER = "======================="
 def test_can_init():
     root_val = 5
     search_tree = BalancedBST(root_val)
+
     assert search_tree
     assert search_tree.root
     assert search_tree.root.value == root_val
@@ -14,7 +15,9 @@ def test_insert_less():
     root_val = 5
     less_val = 2
     search_tree = BalancedBST(root_val)
+
     search_tree.insert(less_val)
+
     assert search_tree
     assert search_tree.root
     assert search_tree.root.value == root_val
@@ -26,7 +29,9 @@ def test_insert_more():
     root_val = 5
     more_val = 10
     search_tree = BalancedBST(root_val)
+
     search_tree.insert(more_val)
+
     assert search_tree
     assert search_tree.root
     assert search_tree.root.value == root_val
@@ -58,11 +63,30 @@ def test_many_insertions():
         search_tree.insert(val)
     search_tree.pretty_print()
 
+def test_manual_left_left_rotation():
+    search_tree = BalancedBST(3)
+    search_tree.insert(2)
+    search_tree.insert(1)
+
+    print()
+    print("Before Rotation:")
+    search_tree.pretty_print()
+    print()
+
+    search_tree.root.rotate_left_left()
+    search_tree.update_root()
+    print("After Rotation:")
+    search_tree.pretty_print()
+    assert search_tree.root.value == 2
+    assert search_tree.root.left.value == 1
+    assert search_tree.root.right.value == 3
+
 tests_to_run = [test_can_init,
                 test_insert_less,
                 test_insert_more,
                 test_insert_both,
-                test_many_insertions]
+                test_many_insertions,
+                test_manual_left_left_rotation]
 
 for t in tests_to_run:
     print(MARKER)
