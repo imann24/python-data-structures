@@ -1,0 +1,7 @@
+language: python3
+
+jobs:
+    include:
+        - stage: "Test"
+          script:
+              - ./balanced_bst/test
