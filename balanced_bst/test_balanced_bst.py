@@ -159,6 +159,64 @@ def test_manual_right_left_rotation():
     assert search_tree.root.right.value == 3
     assert search_tree.height() == 2
 
+def test_balance_left_rotation():
+    search_tree = BalancedBST(1)
+
+    search_tree.insert(2)
+    search_tree.insert(3)
+
+    print()
+    print("Before Balance:")
+    search_tree.pretty_print()
+    print()
+
+    search_tree.balance()
+    print("After Balance:")
+    search_tree.pretty_print()
+
+    assert search_tree.root.value == 2
+    assert search_tree.root.left.value == 1
+    assert search_tree.root.right.value == 3
+    assert search_tree.height() == 2
+
+def test_balance_right_rotation():
+    search_tree = BalancedBST(3)
+    search_tree.insert(2)
+    search_tree.insert(1)
+
+    print()
+    print("Before Balance:")
+    search_tree.pretty_print()
+    print()
+
+    search_tree.balance()
+    print("After Balance:")
+    search_tree.pretty_print()
+
+    assert search_tree.root.value == 2
+    assert search_tree.root.left.value == 1
+    assert search_tree.root.right.value == 3
+    assert search_tree.height() == 2
+
+def test_balance_left_right_rotation():
+    search_tree = BalancedBST(3)
+    search_tree.root.set_left(BinaryTreeNode(1))
+    search_tree.root.left.set_right(BinaryTreeNode(2))
+
+    print()
+    print("Before Balance:")
+    search_tree.pretty_print()
+    print()
+
+    search_tree.balance()
+    print("After Balance:")
+    search_tree.pretty_print()
+
+    assert search_tree.root.value == 2
+    assert search_tree.root.left.value == 1
+    assert search_tree.root.right.value == 3
+    assert search_tree.height() == 2
+
 if __name__ == "__main__":
     tests_to_run = [test_can_init,
                     test_insert_less,
@@ -168,7 +226,9 @@ if __name__ == "__main__":
                     test_manual_left_rotation,
                     test_manual_right_rotation,
                     test_manual_left_right_rotation,
-                    test_manual_right_left_rotation
+                    test_manual_right_left_rotation,
+                    test_balance_left_rotation,
+                    test_balance_right_rotation
                     ]
 
     for run_test in tests_to_run:

@@ -30,6 +30,20 @@ class BinaryTreeNode:
         else:
             self.__insert_right(value)
 
+    def balance(self):
+        left_height = 0
+        right_height = 0
+        if self.left:
+            self.left.balance()
+            left_height = self.left.height() + 1
+        if self.right:
+            self.right.balance()
+            right_height = self.right.height() + 1
+        if left_height - right_height > 1:
+            self.left.rotate_right()
+        elif right_height - left_height > 1:
+            self.right.rotate_left()
+
     def set_left(self, left_child):
         self.left = left_child
         if left_child:
@@ -106,6 +120,13 @@ class BalancedBST:
 
     def rotate_right(self, node=None):
         node.rotate_right()
+        self.update_root()
+
+    """
+    Expose this method for manual testing
+    """
+    def balance(self):
+        self.root.balance()
         self.update_root()
 
     # Return True or False for if tree contains
