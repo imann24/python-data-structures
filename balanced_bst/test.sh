@@ -1,3 +1,5 @@
-#! /bin/sh
+#!/bin/bash
 
-python3 test_balanced_bst.py
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+python3 "${DIR}"/test_balanced_bst.py
