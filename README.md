@@ -3,7 +3,7 @@ Practice implementing common data structures in Python
 
 ## Running
 1. Data structures were written and tested in Python 3
-1. General convention is to provide a `test` executable in folder to validate data structure
+1. General convention is to provide a `test.sh` executable in folder to validate data structure
 
 ## Conventions
 1. Recognize the advantages of using a package management solution (like `pipenv`), but opted against for this project

@@ -3,7 +3,7 @@
 1. Uses AVL tree Rotations
 
 ## Testing
-`./test`
+`./test.sh`
 **Full Test Command**: `python3 test_balanced_bst.py`
 
 ## Dependencies:

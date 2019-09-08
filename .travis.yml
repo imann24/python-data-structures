@@ -5,4 +5,4 @@ jobs:
     include:
         - stage: "Test"
           script:
-              - ./balanced_bst/test
+              - ./balanced_bst/test.sh
