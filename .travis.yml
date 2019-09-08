@@ -8,4 +8,4 @@ jobs:
         - stage: "Test"
           script:
               - ./util/print_header.sh "BALANCED BINARY SEARCH TREE TESTS"
-              - ./balanced_bst/test.sh
+              - pushd balanced_bst && ./test.sh && popd
