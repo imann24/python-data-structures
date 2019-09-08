@@ -7,9 +7,5 @@ jobs:
     include:
         - stage: "Test"
           script:
-              - echo "*********************************"
-              - echo "*********************************"
-              - echo "BALANCED BINARY SEARCH TREE TESTS"
-              - echo "*********************************"
-              - echo "*********************************"
+              - ./util/print_header.sh "BALANCED BINARY SEARCH TREE TESTS"
               - pushd balanced_bst && ./test.sh && popd
