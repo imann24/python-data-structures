@@ -85,8 +85,7 @@ def test_manual_left_rotation():
     search_tree.pretty_print()
     print()
 
-    search_tree.rotate_left()
-    search_tree.update_root()
+    search_tree.rotate_left(search_tree.root.right)
     print("After Rotation:")
     search_tree.pretty_print()
 
@@ -105,8 +104,54 @@ def test_manual_right_rotation():
     search_tree.pretty_print()
     print()
 
-    search_tree.rotate_right()
+    search_tree.rotate_right(search_tree.root.left)
     print("After Rotation:")
+    search_tree.pretty_print()
+
+    assert search_tree.root.value == 2
+    assert search_tree.root.left.value == 1
+    assert search_tree.root.right.value == 3
+    assert search_tree.height() == 2
+
+def test_manual_left_right_rotation():
+    search_tree = BalancedBST(3)
+    search_tree.root.set_left(BinaryTreeNode(1))
+    search_tree.root.left.set_right(BinaryTreeNode(2))
+
+    print()
+    print("Before Rotation:")
+    search_tree.pretty_print()
+    print()
+
+    search_tree.rotate_left(search_tree.root.left.right)
+    print("After Rotate Left:")
+    search_tree.pretty_print()
+
+    search_tree.rotate_right(search_tree.root.left)
+    print("After Rotate Right:")
+    search_tree.pretty_print()
+
+    assert search_tree.root.value == 2
+    assert search_tree.root.left.value == 1
+    assert search_tree.root.right.value == 3
+    assert search_tree.height() == 2
+
+def test_manual_right_left_rotation():
+    search_tree = BalancedBST(1)
+    search_tree.root.set_right(BinaryTreeNode(3))
+    search_tree.root.right.set_left(BinaryTreeNode(2))
+
+    print()
+    print("Before Rotation:")
+    search_tree.pretty_print()
+    print()
+
+    search_tree.rotate_right(search_tree.root.right.left)
+    print("After Rotate Right:")
+    search_tree.pretty_print()
+
+    search_tree.rotate_left(search_tree.root.right)
+    print("After Rotate Left:")
     search_tree.pretty_print()
 
     assert search_tree.root.value == 2
@@ -121,7 +166,10 @@ if __name__ == "__main__":
                     test_insert_both,
                     test_many_insertions,
                     test_manual_left_rotation,
-                    test_manual_right_rotation]
+                    test_manual_right_rotation,
+                    test_manual_left_right_rotation,
+                    test_manual_right_left_rotation
+                    ]
 
     for run_test in tests_to_run:
         print(MARKER)

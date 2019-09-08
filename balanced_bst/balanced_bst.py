@@ -5,6 +5,7 @@ class BinaryTreeNode:
         self.value = value
         self.left = None
         self.right = None
+        """ Convenience pointer to assist with rotations """
         self.parent = None
 
     def __str__(self):
@@ -39,19 +40,35 @@ class BinaryTreeNode:
         if right_child:
             right_child.parent = self
 
+    """
+    For rotations, we need to ensure that the following three nodes are updated:
+    1. self
+    2. self.parent
+    3. self.parent.parent (if set)
+
+    Their parent pointers and their left/right child pointers must be changed appropriately
+
+    Function treats self node as the pivot
+    """
     def rotate_left(self):
-        if self.right:
-            old_child_left = self.right.left
-            self.right.parent = self.parent
-            self.right.set_left(self)
-            self.set_right(old_child_left)
+        if self.parent:
+            self.parent.right = None
+            old_parent = self.parent
+            if self.parent.parent:
+                self.parent.parent.set_left(self)
+            else:
+                self.parent = None
+            self.set_left(old_parent)
 
     def rotate_right(self):
-        if self.left:
-            old_child_right = self.left.right
-            self.left.parent = self.parent
-            self.left.set_right(self)
-            self.set_left(old_child_right)
+        if self.parent:
+            self.parent.left = None
+            old_parent = self.parent
+            if self.parent.parent:
+                self.parent.parent.set_right(self)
+            else:
+                self.parent = None
+            self.set_right(old_parent)
 
     def height(self, current_level=0):
         height_left = current_level
@@ -61,9 +78,6 @@ class BinaryTreeNode:
         if self.right:
             height_right = self.right.height(current_level + 1)
         return max(height_left, height_right)
-
-# for visual debugging purposes
-EMPTY_NODE = BinaryTreeNode("x")
 
 class BalancedBST:
     def __init__(self, root_val):
@@ -77,17 +91,21 @@ class BalancedBST:
     def remove(self, value):
         pass
 
-    # Util debugging method to fix root
+    # Util debugging method to fix root pointer
     def update_root(self):
         while (self.root.parent):
             self.root = self.root.parent
 
-    def rotate_left(self):
-        self.root.rotate_left()
+    """
+    Convenience methods which update the root after performing a rotation on a node
+    """
+
+    def rotate_left(self, node):
+        node.rotate_left()
         self.update_root()
 
-    def rotate_right(self):
-        self.root.rotate_right()
+    def rotate_right(self, node=None):
+        node.rotate_right()
         self.update_root()
 
     # Return True or False for if tree contains
